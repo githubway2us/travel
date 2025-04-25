@@ -19,8 +19,7 @@ app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg', 'jpeg'}
 # ตั้งค่าและเชื่อมต่อกับฐานข้อมูล
 db.init_app(app)
 
-# สร้างตารางในฐานข้อมูลเมื่อแอปเริ่มทำงานครั้งแรก
-@app.before_first_request
+@app.before_request
 def create_tables():
     print("กำลังกระทำการสร้างตารางในฐานข้อมูล...")
     db.create_all()
