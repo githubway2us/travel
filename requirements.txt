@@ -14,4 +14,6 @@ Werkzeug==2.3.6
 fastapi
 uvicorn
 sqlalchemy
+gunicorn
+
 
