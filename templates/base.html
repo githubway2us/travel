@@ -7,77 +7,119 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <style>
-        /* ปรับพื้นหลังของ body เป็นสีดำและใช้รูปพื้นหลัง */
+        /* ปรับพื้นหลังของ body และข้อความ */
         body {
-            background-color: black;
-            color: white; /* เปลี่ยนสีข้อความเป็นสีขาวเพื่อให้อ่านง่าย */
-            background-image: url('{{ url_for('static', filename='images/bg.jpg') }}'); /* รูปภาพจากโฟลเดอร์ static/images */
-            background-size: cover; /* ทำให้รูปภาพขยายจนเต็มหน้าจอ */
-            background-position: center; /* ทำให้รูปภาพอยู่กลางหน้าจอ */
-            background-attachment: fixed; /* ให้รูปภาพติดกับพื้นหลังขณะเลื่อนหน้าเว็บ */
+            background-color: #1a1a1a; /* สีดำเข้มเป็นพื้นหลังสำรอง */
+            color: #ffffff; /* ข้อความสีขาวเพื่อให้อ่านง่าย */
+            background-image: url('{{ url_for("static", filename="images/bg.png") }}');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh; /* ให้ครอบคลุมความสูงทั้งหน้าจอ */
         }
 
-        /* ปรับ navbar ให้เป็นพื้นหลังสีเข้มและข้อความสีขาว */
+        /* ปรับ navbar */
         .navbar {
-            background-color: rgba(0, 0, 0, 0.7); /* ใช้สีดำโปร่งแสง */
+            background-color: rgba(0, 0, 0, 0.8); /* สีดำโปร่งแสงเข้มขึ้นเล็กน้อย */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* เพิ่มเงา */
         }
         .navbar .navbar-brand,
         .navbar .nav-link {
-            color: white;
+            color: #ffffff;
+            font-weight: 500;
         }
-
         .navbar .nav-link:hover {
-            color: #ccc; /* เปลี่ยนสีเมื่อ hover */
+            color: #77f; /* สีน้ำเงินเมื่อ hover */
+            transition: color 0.3s ease;
+        }
+        .navbar-text {
+            color: #ffffff;
+            font-size: 0.9rem;
         }
 
-        /* ปรับสีของ footer */
+        /* ปรับ footer */
         footer {
-            background-color: rgba(0, 0, 0, 0.7); /* ใช้สีดำโปร่งแสง */
-            color: white;
+            background-color: rgba(0, 0, 0, 0.8); /* สีดำโปร่งแสง */
+            color: #ffffff;
+            padding: 20px 0;
+            font-size: 0.85rem;
         }
-
         footer a {
             color: #77f;
+            text-decoration: none;
+        }
+        footer a:hover {
+            color: #99f;
+            text-decoration: underline;
         }
 
-        /* ปรับความสามารถในการตอบสนองบนหน้าจอมือถือ */
+        /* สไตล์สำหรับ flash messages */
+        .alert {
+            background-color: rgba(0, 123, 255, 0.9); /* น้ำเงินโปร่งแสง */
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+
+        /* ปรับการตอบสนองบนมือถือ */
         @media (max-width: 768px) {
             body {
-                background-size: auto; /* ปรับขนาดรูปภาพให้เหมาะสมกับหน้าจอมือถือ */
+                background-size: cover; /* รักษาการครอบคลุมบนมือถือ */
             }
-
             .navbar {
-                background-color: rgba(0, 0, 0, 0.8); /* เพิ่มความเข้มใน navbar สำหรับมือถือ */
+                background-color: rgba(0, 0, 0, 0.9); /* เข้มขึ้นบนมือถือ */
             }
-
             .navbar .navbar-brand,
             .navbar .nav-link {
-                font-size: 1.1rem; /* ขนาดตัวอักษรใหญ่ขึ้นใน navbar บนมือถือ */
+                font-size: 1rem; /* ขนาดตัวอักษรเล็กลงเล็กน้อย */
             }
-
+            .navbar-text {
+                font-size: 0.8rem;
+            }
             footer {
-                font-size: 0.9rem; /* ขนาดตัวอักษรเล็กลงใน footer บนมือถือ */
+                font-size: 0.8rem;
+                padding: 15px 0;
+            }
+            .container {
+                padding-left: 15px;
+                padding-right: 15px;
             }
         }
 
-        /* ปรับขนาดของคอนเทนเนอร์ให้เหมาะสมบนมือถือ */
+        /* ปรับคอนเทนเนอร์ */
         .container {
-            padding-left: 10px;
-            padding-right: 10px;
+            max-width: 1200px; /* จำกัดความกว้างสูงสุด */
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+
+        /* เพิ่มเอฟเฟกต์ hover สำหรับปุ่ม */
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            background-color: #005f99;
+            transform: scale(1.05);
         }
     </style>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark">
-        <div class="container-fluid">
+        <div class="container">
             <a class="navbar-brand" href="{{ url_for('index') }}">Travel Plans</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('index') }}">หน้าแรก</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('about') }}">เกี่ยวกับ</a>
                     </li>
                     {% if current_user %}
                         <li class="nav-item">
@@ -88,6 +130,13 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url_for('transactions') }}">ธุรกรรม</a>
+                        </li>
+                    {% endif %}
+                </ul>
+                <ul class="navbar-nav">
+                    {% if current_user %}
+                        <li class="nav-item">
+                            <span class="navbar-text me-3">👤 {{ current_user.username }} | 💰 {{ puk_coins }} PUK</span>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url_for('logout') }}">ออกจากระบบ</a>
@@ -101,11 +150,6 @@
                         </li>
                     {% endif %}
                 </ul>
-                {% if current_user %}
-                    <span class="navbar-text ms-3">
-                        👤 {{ current_user.username }} | 💰 {{ puk_coins }} PUK
-                    </span>
-                {% endif %}
             </div>
         </div>
     </nav>
@@ -121,12 +165,17 @@
         {% block content %}{% endblock %}
     </div>
 
-    <!-- Footer with Credit -->
-    <footer class="bg-dark text-light text-center py-3 mt-5">
+    <footer class="text-center mt-5">
         <div class="container">
             <small>
-                สร้างโดย <strong>puk@pukumpee</strong> | <span class="text-info">#คัมภีร์สายกระบี่คริปโต "TimeCapsual"</span>
+                สร้างโดย <strong>puk@pukumpee</strong> | 
+                <span class="text-info">#คัมภีร์สายกระบี่คริปโต "TimeCapsual" เวอร์ชั่น เบต้า</span>
             </small>
+            <p>
+                <a href="{{ url_for('terms') }}" style="color: #888; text-decoration: none;">
+                    เงื่อนไขความรับผิดชอบ
+                </a>
+            </p>
         </div>
     </footer>
 </body>

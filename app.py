@@ -50,6 +50,12 @@ def inject_user():
         else:
             session.pop('user_id', None)
     return dict(current_user=user, puk_coins=puk_coins)
+@app.route('/about')
+def about():
+    return render_template('about.html')
+@app.route('/terms')
+def terms():
+    return render_template('terms.html')
 
 @app.route('/')
 def index():
