@@ -4,17 +4,28 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 import os
 from datetime import datetime
-from extensions import db
-from models import User, Province, TravelPlan, Activity, Comment, Like, PukTransaction
+from extensions import db  # นำเข้า db ที่อยู่ใน extensions
+from models import User, Province, TravelPlan, Activity, Comment, Like, PukTransaction  # นำเข้าโมเดล
 
-print("Starting app.py...")
-
+# สร้างแอป Flask
 app = Flask(__name__)
+
+# กำหนดค่าต่าง ๆ สำหรับแอป
 app.config['SECRET_KEY'] = 'your-secret-key'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['UPLOAD_FOLDER'] = 'uploads'
 app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg', 'jpeg'}
 
+# ตั้งค่าและเชื่อมต่อกับฐานข้อมูล
+db.init_app(app)
+
+# สร้างตารางในฐานข้อมูลเมื่อแอปเริ่มทำงานครั้งแรก
+@app.before_first_request
+def create_tables():
+    print("กำลังกระทำการสร้างตารางในฐานข้อมูล...")
+    db.create_all()
+
+print("เริ่มต้นแอป...")
 db.init_app(app)
 print("SQLAlchemy initialized")
 
