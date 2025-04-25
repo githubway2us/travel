@@ -25,8 +25,8 @@ def create_tables():
     db.create_all()
 
 print("เริ่มต้นแอป...")
-db.init_app(app)
 print("SQLAlchemy initialized")
+
 
 print("Models imported")
 
