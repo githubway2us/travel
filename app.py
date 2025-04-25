@@ -535,4 +535,4 @@ if __name__ == '__main__':
                 db.session.add(Province(name=name))
             db.session.commit()
             print(f"Added {len(provinces)} provinces to the database")
-    app.run(debug=True, host='0.0.0.0', port=5901)
+    app.run(debug=True, host='0.0.0.0', port=1000)
