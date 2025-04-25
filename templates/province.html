@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% block title %}🌏 {{ province.name }}{% endblock %}
+{% block content %}
+    <h1 class="text-center">📍 แผนการท่องเที่ยวใน {{ province.name }} 🏞️</h1>
+    <p class="text-center text-info">จำนวนโพสต์ทั้งหมด: {{ plan_count }} โพสต์</p>
+    <div class="mb-3">
+        <a href="{{ url_for('index') }}" class="btn btn-secondary">🔙 กลับไปหน้าแรก</a>
+        {% if session.user_id %}
+            <a href="{{ url_for('post', province_id=province.id) }}" class="btn btn-success">✨ สร้างแผนใหม่</a>
+            <a href="{{ url_for('add_plan', province_id=province.id) }}" class="btn btn-primary">➕ เพิ่มแผนท่องเที่ยว</a>
+        {% else %}
+            <p class="text-muted">🔒 กรุณาล็อกอินเพื่อสร้างหรือเพิ่มแผนการท่องเที่ยว</p>
+        {% endif %}
+    </div>
+
+    {% if plans %}
+        {% for plan in plans %}
+            <div class="card mb-4 shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h5>🎉 {{ plan.name }} โดย {{ plan.user.username }} 👤</h5>
+                    <small>📅 โพสต์เมื่อ {{ plan.created_at.strftime('%Y-%m-%d %H:%M') }}</small>
+                </div>
+                <div class="card-body">
+                    <p><strong>🏕️ สถานที่:</strong> {{ plan.location or 'ไม่ระบุ' }}</p>
+                    <p><strong>🗓️ วันที่:</strong> {{ plan.start_date }} ถึง {{ plan.end_date }}</p>
+                    <p><strong>💸 งบประมาณรวม:</strong> {{ plan.total_budget|format_number }} บาท</p>
+                    
+                    <h6>📋 กิจกรรม ({{ plan.activities|length }} รายการ):</h6>
+                    {% if plan.activities %}
+                        <ul class="list-group mb-3" style="max-height: 200px; overflow-y: auto;">
+                            {% for activity in plan.activities %}
+                                <li class="list-group-item d-flex align-items-start">
+                                    <div>
+                                        {% if activity.time %}
+                                            ⏰ <strong>{{ activity.time }}</strong>
+                                        {% else %}
+                                            ⏰ <span class="text-muted">ไม่ระบุเวลา</span>
+                                        {% endif %}
+                                        {% if activity.detail %}
+                                            : {{ activity.detail }}
+                                        {% else %}
+                                            : <span class="text-muted">ไม่มีรายละเอียด</span>
+                                        {% endif %}
+                                        {% if activity.budget %}
+                                            <span class="badge bg-success ms-2">💵 {{ activity.budget|format_number }} บาท</span>
+                                        {% endif %}
+                                        {% if activity.image_path %}
+                                            <br><img src="{{ url_for('static', filename='uploads/' + activity.image_path) }}" alt="Activity Image" class="img-fluid mt-2" style="max-width: 150px; border-radius: 5px;">
+                                        {% endif %}
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p class="text-muted">😔 ยังไม่มีกิจกรรมในแผนนี้</p>
+                    {% endif %}
+                    <a href="{{ url_for('plan_detail', plan_id=plan.id) }}" class="btn btn-info">🔍 ดูรายละเอียด</a>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="alert alert-info text-center">
+            😢 ยังไม่มีแผนการท่องเที่ยวใน {{ province.name }} ค่ะ <br>
+            {% if session.user_id %}
+                <a href="{{ url_for('post', province_id=province.id) }}" class="btn btn-success mt-2">✨ มาเป็นคนแรกที่สร้างแผน!</a>
+            {% else %}
+                <a href="{{ url_for('login') }}" class="btn btn-primary mt-2">🔑 ล็อกอินเพื่อสร้างแผน</a>
+            {% endif %}
+        </div>
+    {% endif %}
+{% endblock %}
