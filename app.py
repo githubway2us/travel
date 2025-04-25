@@ -373,6 +373,12 @@ def province(province_id):
             print(f"Activity: time={activity.time}, detail={activity.detail}, budget={activity.budget}")
     return render_template('province.html', province=province, plans=plans)
 
+@app.route('/plan/<int:plan_id>')
+def plan_detail(plan_id):
+    plan = get_plan_by_id(plan_id)
+    transactions = PukTransaction.query.filter_by(travel_plan_id=plan_id).all()
+    return render_template('plan_detail.html', plan=plan, transactions=transactions)
+
 @app.route('/plan/<int:plan_id>/delete', methods=['POST'])
 def delete_plan(plan_id):
     if 'user_id' not in session:
@@ -547,7 +553,7 @@ if __name__ == '__main__':
                 db.session.add(Province(name=name))
             db.session.commit()
             print(f"Added {len(provinces)} provinces to the database")
-    app.run(debug=True, host='0.0.0.0', port=1000)
+    app.run(debug=True, host='0.0.0.0', port=2000)
 else:
     # สำหรับ gunicorn
     with app.app_context():
