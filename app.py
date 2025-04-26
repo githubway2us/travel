@@ -372,8 +372,9 @@ def edit_plan(plan_id):
 @app.route('/province/<int:province_id>')
 def province(province_id):
     province = db.session.get(Province, province_id) or Province.query.get_or_404(province_id)
-    plans = TravelPlan.query.filter_by(province_id=province_id).options(db.joinedload(TravelPlan.activities)).all()
-    for plan in plans:
+    page = request.args.get('page', 1, type=int)
+    plans = TravelPlan.query.filter_by(province_id=province_id).options(db.joinedload(TravelPlan.activities)).paginate(page=page, per_page=10, error_out=False)
+    for plan in plans.items:  # Use .items to access the plans on the current page
         print(f"Plan {plan.id} has {len(plan.activities)} activities")
         for activity in plan.activities:
             print(f"Activity: time={activity.time}, detail={activity.detail}, budget={activity.budget}")

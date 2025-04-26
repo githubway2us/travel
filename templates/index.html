@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 {% block title %}หน้าแรก{% endblock %}
 {% block content %}
-<div class="p-4 rounded-4" style="background-color: rgba(255, 255, 255, 0.85); backdrop-filter: blur(5px);"></div>
-    <h1 class="text-center">🗺️ เลือกจังหวัดเพื่อดูแผนการท่องเที่ยว</h1>
+<div class="p-4 rounded-4" style="background-color: rgba(3, 49, 42, 0.85); backdrop-filter: blur(5px);">
+    <h1 class="text-center">🗺️ เลือกจังหวัดเพื่อดูแผนการท่องเที่ยว</h1></div>
     <div class="accordion" id="regionsAccordion">
         {% for region, provinces in region_provinces.items() %}
             <div class="accordion-item">
