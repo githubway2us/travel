@@ -39,7 +39,6 @@
             <a href="{{ url_for('index') }}" class="btn btn-secondary">🔙 กลับไปหน้าแรก</a>
             {% if session.user_id %}
                 <a href="{{ url_for('post', province_id=province.id) }}" class="btn btn-success">✨ สร้างแผนใหม่</a>
-                <a href="{{ url_for('add_plan', province_id=province.id) }}" class="btn btn-primary">➕ เพิ่มแผนท่องเที่ยว</a>
             {% else %}
                 <p class="text-muted mt-2">🔒 กรุณาล็อกอินเพื่อสร้างหรือเพิ่มแผนการท่องเที่ยว</p>
             {% endif %}
