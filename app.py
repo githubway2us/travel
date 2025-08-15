@@ -19,10 +19,10 @@ app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg', 'jpeg'}
 # ตั้งค่าและเชื่อมต่อกับฐานข้อมูล
 db.init_app(app)
 
-#@app.before_request
-#def create_tables():
-    #print("กำลังกระทำการสร้างตารางในฐานข้อมูล...")
-    #db.create_all()
+@app.before_request
+def create_tables():
+    print("กำลังกระทำการสร้างตารางในฐานข้อมูล...")
+    db.create_all()
 
 print("เริ่มต้นแอป...")
 print("SQLAlchemy initialized")
